@@ -1,0 +1,42 @@
+body{
+    background-color: #F0F2F5!important;
+}
+
+main .profile{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+
+.links i{
+    font-size: 1.4rem;
+}
+
+
+.links{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.col-md-6 .card .poststatus{
+background-color: #F0F2F5;
+}
+
+.typepost{
+    border: 0!important;
+    outline: 0!important;
+    width: 100%;
+}
+
+.post .profile{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.body img{
+    
+    object-fit: cover;
+    
+}

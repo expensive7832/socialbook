@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main-content %}
+<link rel="stylesheet" href="{% static 'signup.css' %}">
+
+<main class="container">
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+
+ 
+  
+            <div class="alert {{'alert-'}}{{ message.tags }} alert-dismissible" role="alert" >
+              <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="True">&times;</span>
+              </button>
+              {{ message }}
+            </div>
+          
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} 
+        <div class="row align-items-center ">
+            <div class="col-md-6 mb-3">
+                <label for="fname" class="form-label">FIRSTNAME</label>
+                <input name="first_name" id="fname" type="text" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="lname" class="form-label">LASTNAME</label>
+                <input name="last_name" id="lname" type="text" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">EMAIL</label>
+                <input name="email" id="email" type="email" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">PHONE</label>
+                <input name="phone" id="phone" type="text" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password" class="form-label">PASSWORD</label>
+                <input name="password" id="password" type="password" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="repassword" class="form-label">RETYPE PASSWORD</label>
+                <input name="repassword" id="repassword" type="password" class="form-control">
+            </div>
+           
+            <div class="col-md-6 mb-3">
+                <label for="photo" class="form-label">PHOTO</label>
+                <input name="photo" id="photo" type="file" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="username" class="form-label">USERNAME</label>
+                <input name="username" id="username" type="text" class="form-control">
+            </div>
+
+            <div class="my-3">
+                <label for="address" class="form-label">ADDRESS</label>
+                <input name="address" id="address" type="address" class="form-control"/>
+            </div>
+            
+        </div>
+        <button class="btn btn-secondary">SIGNUP</button>
+        
+    </form>
+
+    <div class="d-flex gap-2 justify-content-center  ">
+        <p>already have an account?</p>
+        <a href="/login" class="nav-link text-primary ">Login</a>
+    </div>
+</main>
+{% endblock %}
+
+    
+

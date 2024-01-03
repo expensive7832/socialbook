@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}Home{% endblock%}
+
+{% block main-content %}
+
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+
+
+<main>
+    
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-3 d-md-block  p-md-5 d-none">
+               <div class="d-flex gap-3 align-items-center ">
+                {% if user is not None %}
+                <img class="profile" src="media/{{user.photo}}" alt="profile photo"/>
+                {% endif %}
+                <h6 class="text-capitalize ">
+                    {% if user is not None %}
+                    {{user.first_name}} {{user.last_name}}
+                    {% endif %}
+                </h6>
+               </div>
+             <div class="links mx-md-4 my-md-2">
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-users"></i>
+                    <h6 class="text-capitalize ">Friends</h6>
+                </div>
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-shop"></i>
+                    <h6 class="text-capitalize ">MarketPlace</h6>
+                </div>
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-rss"></i>
+                    <h6 class="text-capitalize ">Feeds</h6>
+                </div>
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-monument"></i>
+                    <h6 class="text-capitalize ">Memory</h6>
+                </div>
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                    <h6 class="text-capitalize ">Saved</h6>
+                </div>
+                <div class="d-flex gap-3 my-5 align-items-center ">
+                    <i class="fa-solid fa-video"></i>
+                    <h6 class="text-capitalize ">Videos</h6>
+                </div>
+             </div>
+            </div>
+
+           
+            <div class="col-md-6 pt-md-2">
+                {% if user is not None %}
+                <div class="card d-flex flex-row p-2 ">
+                    <img class="profile" src="media/{{user.photo}}" alt="profile photo">
+                    <!-- Modal trigger button -->
+                    <button
+                        type="button"
+                        class="btn w-100 poststatus border mx-4 my-2 rounded-5 "
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalId"
+                    >
+                        What is on your mind ? {{user.first_name}}
+                    </button>
+                    
+                    <!-- Modal Body -->
+                    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                    <div
+                        class="modal fade"
+                        id="modalId"
+                        tabindex="-1"
+                        data-bs-backdrop="static"
+                        data-bs-keyboard="false"
+                        
+                        role="dialog"
+                        aria-labelledby="modalTitleId"
+                        aria-hidden="true"
+                    >
+                        <div
+                            class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+                            role="document"
+                        >
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title " id="modalTitleId">
+                                        Create Post
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex gap-3 align-items-center ">
+                                        <img class="profile" src="media/{{user.photo}}" alt="profile photo">
+                                        <h6 class="text-capitalize ">{{user.first_name}} {{user.last_name}}</h6>
+                                       </div>
+
+                                       <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                       <input name="text" class="fs-4 mx-3 my-5 typepost " placeholder="What is on your Mind ?{{user.first_name}}" />
+                                        <input id="photo" type="file" name="photo" multiple hidden>
+                                       <div class="border rounded-2">
+                                        <div class="d-flex align-items-center  justify-content-between p-3">
+                                            <p>Add To Your Post</p>
+                                            <div class="icons d-flex gap-3">
+                                                <label for="photo" class="fa-solid fa-images"></label>
+                                                <i class="fa-solid fa-user"></i>
+                                                <i class="fa-solid fa-face-smile"></i>
+                                            </div>
+                                        </div>
+                                       </div>
+
+                                       <button type="submit" class="btn btn-secondary w-100 my-3">POST</button>
+
+                                    </form>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+
+                    
+                </div>
+                {% endif %}
+
+
+                {% if posts %}
+                
+                {% for post in posts %}
+                
+
+                <!-- posts -->
+                <div class="post bg-white my-3">
+                   <div class="header py-4 px-2 d-flex justify-content-between ">
+                       <div class="d-flex gap-3 align-items-center ">
+                           <img class="profile" src="/media/{{post.user.photo}}" alt="post images">
+                           <div class="info">
+                               <h6 class="text-capitalize ">{{post.user.first_name}} {{post.user.last_name}}</h6>
+                               <small class="small">suggested for you . {{post.dateCreated|date:"d M"}}</small>
+                           </div>
+                       </div>
+
+                       <div class="d-flex gap-3">
+                           <i class="fa-solid fa-ellipsis"></i>
+                           <i role="button" onclick="handleRemove()" class="fa-solid fa-times"></i>
+                       </div>
+                   </div>
+                   <hr>
+                   <div class="body">
+                       <p class="p-3">{{post.text}}</p>
+
+                       {% if post.images.all|length < 1 %}
+
+    
+
+                       {% elif post.images.all|length == 1 %}
+
+                       <div>
+                        {% for image in post.images.all %}
+                       <img class="img-fluid " src="/media/{{image}}" alt="">
+                       {% endfor %}
+
+                       </div>
+
+                       {% else %}
+
+                       <div id="carouselId" class="carousel slide" data-bs-ride="carousel" data-interval="false">
+                        <div class="carousel-indicators">
+
+                            {% for image in post.images.all %}
+                            <li
+                            data-bs-target="#carouselId"
+                            data-bs-slide-to="{{forloop.counter0}}"
+                            {% if forloop.first %}
+                            class="active"
+                            {% endif %}
+                            aria-current="true"
+                            aria-label="First slide"
+                        ></li>
+                            {% endfor %}
+                            
+                           
+                            
+                        </div>
+                        <div class="carousel-inner" role="listbox">
+                            {% for image in post.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}" >
+                                <img
+                                    src="/media/{{image}}"
+                                    class="w-100 d-block"
+                                    alt="slider"
+                                />
+                            </div>
+                           
+                            {% endfor %}
+                           
+                            
+                        </div>
+                       
+                       </div>
+                       
+
+                       {% endif %}
+                   </div>
+                   <div class="footer"></div>
+               </div>
+
+               
+               {% endfor %}
+                
+                {% else %}
+                
+                <h3 class="text-warning  fw-bold text-center ">No Article!!! kindly refresh</h3>
+                
+                {% endif %}
+            </div>
+           
+            <div class="col-md-3 d-md-block d-none"></div>
+    </div>
+    </div>
+</main>
+
+
+<script>
+    function handleRemove(){
+      document.querySelector(".post").remove()
+    }
+
+
+</script>
+
+{% endblock%}
+
+
+
+<!-- Optional: Place to the bottom of scripts -->
+<!-- <script>
+   const myModal = new bootstrap.Modal(
+       document.getElementById("modalId"),
+       options,
+   );
+</script> -->

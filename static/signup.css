@@ -1,0 +1,12 @@
+main{
+    width: 70%!important;
+    margin: 4rem auto;
+   
+}
+
+@media (max-width:576px) {
+    main{
+        width: 90%;
+        margin: 1rem auto;
+    }
+}

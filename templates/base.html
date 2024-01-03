@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Book | {% block title%}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'plugin/aos.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+
+    <style>
+        .loc{
+            background: url(./../static/images/map.webp);
+            height: fit-content;
+            background-size: contain;
+            padding: 2rem;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand fw-bolder " href="/">SOCIAL BOOK</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav m-auto mt-2 mt-lg-0">
+
+                    <li class="nav-item">
+                        <a style="font-size: 1.5rem;" class="nav-link fw-bolder fa-solid  fa-plus-circle" href="/about"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-size: 1.5rem;" class="nav-link fw-bolder fa-solid  fa-search" href="/about"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-size: 1.5rem;" class="nav-link fw-bolder fa-brands  fa-facebook-messenger" href="/about"></a>
+                    </li>
+
+                   
+
+                </ul>
+
+
+                <ul class="navbar-nav">
+                    <!-- {% block authuser %}{% endblock %} -->
+                    {% if user is not None %}
+                    <a class=" btn btn-dark" href="/logout">Logout</a>
+                    {% else %}
+                    <a class=" btn btn-dark" href="/login">Login</a>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    {% block main-content %}{% endblock %}
+
+
+    <footer class="bg-secondary p-md-5 ">
+
+        <div class="container text-white">
+            <div class="row gap-3 align-items-center  ">
+                <div class="col-md-3">
+                    <h5 class="">Our Company</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur
+                        adipisicing elit. Similique, non?
+                    </p>
+                </div>
+
+                <div class="col-md-3">
+                    <h5>Useful Links</h5>
+                    <ul class="second">
+                        <a href="" class="justify-content-start  nav-link">Contact</a>
+                        <a href="" class="justify-content-start  nav-link">Our Mission</a>
+                        <a href="" class="justify-content-start  nav-link">Our Service</a>
+                        <a href="" class="justify-content-start  nav-link">Terms & Condition</a>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 addr">
+                    <h5>Address</h5>
+                    <div class="loc">
+                        <span class="d-block m-auto" tabindex="0" data-toggle="tooltip" title="86 solomon ave">
+                            <i class="fa-solid h1 fa-location-dot"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+
+    <script src="{% static 'plugin/bootstrap.js' %}"></script>
+    <script src="{% static 'plugin/counter.js' %}"></script>
+    <script src="{% static 'plugin/aos.min.js' %}"></script>
+    <script src="{% static 'plugin/typed.js' %}"></script>
+    <script src="{% static 'plugin/script.js' %}"></script>
+</body>
+
+</html>
